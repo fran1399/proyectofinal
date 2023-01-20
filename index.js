@@ -29,7 +29,7 @@ app.set('views', path.join(__dirname, 'views'));
 hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 //Conexion a la base de datos
-const conexion =mysql.createConnection({
+/* const conexion =mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USER,
     password: process.env.PASSWORD,
@@ -40,7 +40,7 @@ const conexion =mysql.createConnection({
 conexion.connect((err) => {
     if(err) throw err;
     console.log(`Conectado a la Database ${process.env.database}`);
-});   
+});    */
 
 //Rutas de la aplicacion
 app.get('/', (req, res) => {
@@ -64,19 +64,21 @@ app.get('/vinos', (req, res) => {
 })
 
 app.get('/compras', (req, res) => {
+    res.render('compras', {
+    })
 
-        let sql = "SELECT * FROM ventas";
+        /* let sql = "SELECT * FROM ventas";
         conexion.query(sql, function(err, result){
             if (err) throw err;
                 console.log(result);
                 res.render('compras', {
                     datos: result
                 })
-        })  
+        })   */
 })
 
 app.post('/compras', (req, res) => {
-    console.log(req);
+    /* console.log(req);
 
     const vino = req.body.vino;
     const cantidad = req.body.cantidad;
@@ -93,26 +95,26 @@ app.post('/compras', (req, res) => {
             if (err) throw err;
                 console.log(`1 registro insertado`);
                 res.redirect('/compras') //Es la página a donde se va a enviar al cliente después de que envíe los datos//
-        }) 
+        })  */
 
-        /* res.render('sinDatos') */ 
+        res.render('compras') 
 })
 
 app.post('/delete', (req, res) => {
 
     console.log(req.body.idVenta);
 
-    let sql = "DELETE FROM ventas where idVenta = " + req.body.idVenta + "";
+    /* let sql = "DELETE FROM ventas where idVenta = " + req.body.idVenta + "";
     console.log(sql);
     conexion.query(sql, function(err, result){
         if (err) throw err;
             console.log('Datos eliminados: ' + result.affectedRows);
             res.render('compras')
-    })   
+    })    */
 
-    /* res.json({
+    res.json({
         prueba: 'Probando deploy sin conexion a la Database'
-    })  */
+    })  
 })
 
 app.post('/update', (req, res) => {
@@ -122,7 +124,7 @@ app.post('/update', (req, res) => {
     const aclaracion = req.body.aclaracion;
     const idVenta = req.body.idVenta;
 
-    let sql = "UPDATE ventas SET vino = '" 
+    /* let sql = "UPDATE ventas SET vino = '" 
     + vino 
     + "', cantidad = '" 
     + cantidad 
@@ -135,7 +137,7 @@ app.post('/update', (req, res) => {
         if (err) throw err;
             console.log('Datos actualizados: ' + result.affectedRows); 
             res.render('compras')
-    })  
+    })   */
 })
 
 //Servidor a la escucha de las peticiones
