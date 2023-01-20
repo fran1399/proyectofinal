@@ -1,0 +1,15 @@
+body{
+    background-color: rgb(255, 252, 239);
+    
+}
+
+.formulario {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding-left: 15rem;
+} 
+
+.cantidad {
+    padding-top: 10rem;
+}

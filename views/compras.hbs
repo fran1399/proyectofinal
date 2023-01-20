@@ -1,0 +1,148 @@
+<link rel="stylesheet" href="/css/compras.css">
+
+<div class="formulario">
+<div class="container text-center m-5 fondo">
+    <hr>
+    <h1>
+        Formulario de compras
+    </h1>
+    <hr>
+</div>
+
+<div class="container m-5">
+    <form action="/compras" method="post">
+        <div class="mb-3">
+            <label for="vino" class="form-label">Nombre del vino</label>
+            <input type="text" class="form-control" id="vino" name="vino" required>
+        </div>
+        <div class="mb-3">
+            <label for="cantidad" class="form-label">Cantidad</label>
+            <input type="number" class="form-control" id="cantidad" name="cantidad" required>
+        </div>
+        <div class="mb-3">
+            <label for="aclaracion" class="form-label">Aclaraciones</label>
+            <input type="text" class="form-control" id="aclaracion" name="aclaracion" required>
+        </div>
+        <div class="mb-3 text-center">
+        <button type="submit" class="btn btn-danger">Enviar</button>
+        </div>
+    </form>
+</div>
+
+<div class="container text-center m-5">
+    <hr>
+    <h1>
+        Lista de compras
+    </h1>
+    <hr>
+</div>
+
+<table class="table table-striped container" id="mitabla">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre del vino</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Aclaraciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each datos}}
+        <tr>
+        <th scope="row">{{ idVenta }}</th>
+        <td>{{ vino }}</td>
+        <td>{{ cantidad }}</td>
+        <td>{{ aclaracion }}</td>
+        <td>
+            <a href="javascript:void(0);" class="btn btn-danger delete" data-idVenta="{{ idVenta }}">Eliminar</a>
+            <a href="javascript:void(0);" class="btn btn-primary edit" data-idVenta="{{ idVenta }}" data-vino="{{ vino }}" data-cantidad="{{ cantidad }}" data-aclaracion="{{ aclaracion }}">Editar</a>
+        </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+
+{{!-- Modal para el Delete --}}
+<form action="/delete" method="post">
+    <div class="modal" id="DeleteModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Eliminar Compra</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Está seguro de eliminar esta compra?</p>
+            </div>
+            <div class="modal-footer">
+                <input type="number" name="idCompra" id="idCompra" class="idCompra" required>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{{!-- Modal para el Update --}}
+
+<form action="/update" method="post">
+    <div class="modal fade" id="EditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar compra</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="vino" class="col-form-label">Vino:</label>
+                <input type="text" class="form-control vino" id="vino" name="vino">
+            </div>
+            <div class="mb-3">
+                <label for="cantidad" class="col-form-label">Cantidad:</label>
+                <textarea class="form-control cantidad" id="cantidad" name="cantidad"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="aclaracion" class="col-form-label">Aclaracion:</label>
+                <textarea class="form-control aclaracion" id="aclaracion" name="aclaracion"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="number" name="idVenta" id="idVenta" class="idVenta">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Editar</button>
+        </div>
+        </div>
+    </div>
+    </div>
+</form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+
+{{!-- Función para tomar los datos del Modal  --}}
+
+<script>
+    
+    $(document).ready(function() {
+        {{!-- Modal del delete --}}
+        $('#mitabla').on('click', '.delete', function (){
+            let idVenta = $(this).data('idVenta');
+            $('#DeleteModal').modal('show')
+        })
+        {{!-- Modal del Edit --}}
+        $('#mitabla').on('click', '.edit', function (){
+            let idVenta = $(this).data('idVenta');
+            let vino = $(this).data('vino');
+            let cantidad = $(this).data('cantidad')
+            let aclaracion = $(this).data('aclaracion')
+            $('#EditModal').modal('show');
+            $('.vino').val(vino);
+            $('.cantidad').val(cantidad);
+            $('.aclaracion').val(aclaracion);
+        })
+    })
+    
+</script>
